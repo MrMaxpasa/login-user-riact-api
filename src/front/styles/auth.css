@@ -1,8 +1,10 @@
 /* src/front/styles/auth.css */
 /* From Uiverse.io by andrew-demchenk0 */
-
+body{
+    background-color: #eaed3f;
+}
 .wrapper {
-  --input-focus: #2d8cf0;
+  --input-focus: #f6be14;
   --font-color: #323232;
   --font-color-sub: #666;
   --bg-color: #fff;
