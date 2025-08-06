@@ -1,30 +1,44 @@
-// Import necessary components and functions from react-router-dom.
+// src/front/routes.jsx
+import React from 'react';
+import { createBrowserRouter, createRoutesFromElements, Route, Navigate } from 'react-router-dom';
+import { Layout } from './pages/Layout';
+import { Home } from './pages/Home';
+import { Single } from './pages/Single';
+import { Demo } from './pages/Demo';
+import { FlipAuth } from './components/FlipAuth';
+import useGlobalReducer from './hooks/useGlobalReducer';
 
-import {
-    createBrowserRouter,
-    createRoutesFromElements,
-    Route,
-} from "react-router-dom";
-import { Layout } from "./pages/Layout";
-import { Home } from "./pages/Home";
-import { Single } from "./pages/Single";
-import { Demo } from "./pages/Demo";
+// Componente para proteger rutas
+const ProtectedRoute = ({ children }) => {
+  const { store } = useGlobalReducer();
+  const isLogged = store.message !== null;
+  return isLogged ? children : <Navigate to="/login" replace />;
+};
 
 export const router = createBrowserRouter(
-    createRoutesFromElements(
-    // CreateRoutesFromElements function allows you to build route elements declaratively.
-    // Create your routes here, if you want to keep the Navbar and Footer in all views, add your new routes inside the containing Route.
-    // Root, on the contrary, create a sister Route, if you have doubts, try it!
-    // Note: keep in mind that errorElement will be the default page when you don't get a route, customize that page to make your project more attractive.
-    // Note: The child paths of the Layout element replace the Outlet component with the elements contained in the "element" attribute of these child paths.
+  createRoutesFromElements(
+    <>
+      {/* Ruta única para login y registro */}
+      <Route path="/login" element={<FlipAuth />} />
+      <Route path="/register" element={<FlipAuth />} />
 
-      // Root Route: All navigation will start from here.
-      <Route path="/" element={<Layout />} errorElement={<h1>Not found!</h1>} >
-
-        {/* Nested Routes: Defines sub-routes within the BaseHome component. */}
-        <Route path= "/" element={<Home />} />
-        <Route path="/single/:theId" element={ <Single />} />  {/* Dynamic route for single items */}
-        <Route path="/demo" element={<Demo />} />
+      {/* Rutas protegidas bajo Layout */}
+      <Route
+        path="/"
+        element={
+          <ProtectedRoute>
+            <Layout />
+          </ProtectedRoute>
+        }
+        errorElement={<Navigate to="/login" replace />}
+      >
+        <Route index element={<Home />} />
+        <Route path="single/:theId" element={<Single />} />
+        <Route path="demo" element={<Demo />} />
       </Route>
-    )
+
+      {/* Cualquier otra ruta redirige a login */}
+      <Route path="*" element={<Navigate to="/login" replace />} />
+    </>
+  )
 );

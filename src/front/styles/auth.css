@@ -1,0 +1,174 @@
+/* src/front/styles/auth.css */
+/* From Uiverse.io by andrew-demchenk0 */
+
+.wrapper {
+  --input-focus: #2d8cf0;
+  --font-color: #323232;
+  --font-color-sub: #666;
+  --bg-color: #fff;
+  --bg-color-alt: #666;
+  --main-color: #323232;
+
+  /* Centrar con grid */
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100vh;
+}
+
+.card-switch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.switch {
+  position: relative;
+  width: 300px;
+  height: 370px; /* altura flip-card + toggle */
+  display: block;
+}
+
+.switch .slider,
+.switch .card-side {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.slider {
+  width: 60px;
+  height: 20px;
+  cursor: pointer;
+  border: 2px solid var(--main-color);
+  box-shadow: 4px 4px var(--main-color);
+  border-radius: 5px;
+  background-color: var(--bg-color);
+  transition: 0.3s;
+  z-index: 2;
+}
+
+.slider:before {
+  content: "";
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  border: 2px solid var(--main-color);
+  border-radius: 5px;
+  left: -2px;
+  bottom: 2px;
+  background-color: var(--bg-color);
+  box-shadow: 0 3px 0 var(--main-color);
+  transition: 0.3s;
+}
+
+.toggle {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle:checked + .slider {
+  background-color: var(--input-focus);
+}
+
+.toggle:checked + .slider:before {
+  transform: translateX(30px);
+}
+
+/* Ajuste de separación para los textos “Log in” y “Sign up” */
+.card-side::before {
+  content: 'Log in';
+  position: absolute;
+  left: -120px;  /* Más a la izquierda */
+  top: 0;
+  width: 100px;
+  text-decoration: underline;
+  color: var(--font-color);
+  font-weight: 600;
+}
+
+.card-side::after {
+  content: 'Sign up';
+  position: absolute;
+  left: 120px;   /* Más a la derecha */
+  top: 0;
+  width: 100px;
+  color: var(--font-color);
+  font-weight: 600;
+}
+
+.toggle:checked ~ .card-side::before {
+  text-decoration: none;
+}
+
+.toggle:checked ~ .card-side::after {
+  text-decoration: underline;
+}
+
+.flip-card__inner {
+  width: 300px;
+  height: 350px;
+  position: absolute;
+  top: 40px; /* bajo el toggle */
+  left: 0;
+  perspective: 1000px;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+  z-index: 1;
+}
+
+.toggle:checked ~ .flip-card__inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card__front,
+.flip-card__back {
+  padding: 20px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  background: lightgrey;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  border-radius: 5px;
+  border: 2px solid var(--main-color);
+  box-shadow: 4px 4px var(--main-color);
+}
+
+.flip-card__back {
+  transform: rotateY(180deg);
+}
+
+.title {
+  font-size: 25px;
+  font-weight: 900;
+  color: var(--main-color);
+}
+
+.flip-card__input {
+  width: 250px;
+  height: 40px;
+  border-radius: 5px;
+  border: 2px solid var(--main-color);
+  font-size: 15px;
+  font-weight: 600;
+  padding: 5px 10px;
+  margin-bottom: 15px; /* espacio entre inputs */
+}
+
+.flip-card__btn {
+  width: 120px;
+  height: 40px;
+  border-radius: 5px;
+  border: 2px solid var(--main-color);
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+}
